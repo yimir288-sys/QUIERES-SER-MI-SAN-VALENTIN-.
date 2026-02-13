@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para el Amor de Mi Vida ❤️</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI', sans-serif;
+}
+
+body{
+height:100vh;
+background:linear-gradient(135deg,#ff4da6,#ff0066,#660033);
+display:flex;
+justify-content:center;
+align-items:center;
+overflow:hidden;
+position:relative;
+}
+
+/* CORAZONES FONDO */
+.fondo-corazon{
+position:absolute;
+color:rgba(255,255,255,0.7);
+animation:flotar linear infinite;
+z-index:0;
+}
+
+@keyframes flotar{
+0%{transform:translateY(100vh); opacity:1;}
+100%{transform:translateY(-10vh); opacity:0;}
+}
+
+/* SOBRE */
+.envelope{
+position:absolute;
+width:300px;
+height:180px;
+background:#ffcccc;
+border-radius:15px;
+display:flex;
+justify-content:center;
+align-items:center;
+cursor:pointer;
+z-index:10;
+transition:1s;
+text-align:center;
+}
+
+.envelope:before{
+content:'';
+position:absolute;
+top:0;
+width:100%;
+height:100%;
+background:#ff99bb;
+clip-path:polygon(0 0,50% 50%,100% 0);
+}
+
+.open{
+transform:translateY(-500px);
+opacity:0;
+}
+
+/* TARJETA */
+.card{
+position:absolute;
+background:#f5e6d8;
+width:90%;
+max-width:750px;
+padding:40px;
+border-radius:30px;
+box-shadow:0 15px 50px rgba(0,0,0,0.4);
+display:flex;
+justify-content:space-between;
+align-items:center;
+opacity:0;
+transform:scale(0.8);
+transition:1s;
+z-index:5;
+}
+
+.show{
+opacity:1;
+transform:scale(1);
+}
+
+.text{
+width:55%;
+}
+
+.text p{
+line-height:1.7;
+font-size:16px;
+margin-bottom:12px;
+}
+
+.ramo-container{
+width:40%;
+display:flex;
+flex-direction:column;
+align-items:center;
+}
+
+.ramo{
+width:100%;
+max-width:260px;
+animation:flotarRamo 4s ease-in-out infinite;
+}
+
+@keyframes flotarRamo{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-12px);}
+}
+
+.pregunta{
+margin-top:15px;
+font-size:20px;
+font-weight:bold;
+color:#cc0066;
+text-align:center;
+}
+
+.botones{
+margin-top:15px;
+display:flex;
+gap:15px;
+}
+
+.botones button{
+padding:10px 20px;
+border:none;
+border-radius:20px;
+font-size:16px;
+cursor:pointer;
+}
+
+.si{background:#ff4da6;color:white;}
+.no{background:#999;color:white;}
+
+/* MENSAJE FINAL */
+#mensajeFinal{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:#fff0f5;
+padding:40px;
+border-radius:25px;
+box-shadow:0 15px 40px rgba(0,0,0,0.4);
+text-align:center;
+display:none;
+z-index:200;
+max-width:500px;
+}
+
+#mensajeFinal h2{
+color:#cc0066;
+margin-bottom:20px;
+}
+
+#mensajeFinal p{
+margin:10px 0;
+font-size:17px;
+line-height:1.6;
+color:#444;
+}
+
+/* EXPLOSION */
+.explosion{
+position:fixed;
+font-size:20px;
+animation:explotar 2s linear forwards;
+z-index:300;
+}
+
+@keyframes explotar{
+0%{opacity:1; transform:translateY(0) scale(1);}
+100%{opacity:0; transform:translateY(-200px) scale(2);}
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- MUSICA -->
+<audio id="musica" src="Music/I Think They Call This Love (Cover).mp3"></audio>
+
+<div class="envelope" onclick="abrirCarta()" id="sobre">
+<h2>❤️ Toca para abrir ❤️</h2>
+</div>
+
+<div class="card" id="carta">
+
+<div class="text">
+<h2>Para el amor de mi vida ❤️</h2>
+<p id="mensajePrincipal"></p>
+</div>
+
+<div class="ramo-container">
+<img src="Img/ramo.png" class="ramo" alt="Ramo de flores">
+<div class="pregunta">¿Quieres ser mi San Valentín? 💖</div>
+
+<div class="botones">
+<button class="si" onclick="aceptar()">Sí 💖</button>
+<button class="no" onclick="moverNo()">No 😢</button>
+</div>
+</div>
+
+</div>
+
+<div id="mensajeFinal">
+<h2 id="tituloFinal"></h2>
+<p id="textoFinal"></p>
+</div>
+
+<script>
+
+/* TEXTOS */
+const textoPrincipal = `Después de que el mundo hiciera su magia y nuestros caminos se cruzaran, 
+me quedó claro algo: quiero vivir este 14 de febrero contigo.
+
+Mi corazón —la única fuente confiable en estos temas— lo tiene claro desde hace mucho tiempo.
+
+Busco un San Valentín a tu lado, lleno de amor, risas sinceras y momentos que se queden grabados para siempre.
+
+Hoy quiero decirte que eres alguien sumamente especial para mí, y por eso, quiero preguntarte…`;
+
+const tituloFinalTexto = "💖 Gracias por aceptar 💖";
+
+const textoFinalCompleto = `Gracias por aceptar ser mi San Valentín, mi niña hermosa.
+
+Sabes que te amo y que me haces sentir tranquilo, feliz y acompañado cada día.
+
+No hay nadie con quien quiera compartir momentos especiales más que contigo.
+
+Con todo mi amor 💖💐`;
+
+/* EFECTO MAQUINA */
+function escribirTexto(elemento, texto, velocidad){
+elemento.innerHTML="";
+let i=0;
+const intervalo=setInterval(()=>{
+elemento.innerHTML += texto[i] === "\n" ? "<br>" : texto[i];
+i++;
+if(i>=texto.length) clearInterval(intervalo);
+},velocidad);
+}
+
+/* CORAZONES FONDO */
+function crearCorazonFondo(){
+const heart=document.createElement("div");
+heart.classList.add("fondo-corazon");
+heart.innerHTML="❤️";
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=Math.random()*25+15+"px";
+heart.style.animationDuration=Math.random()*4+4+"s";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),8000);
+}
+setInterval(crearCorazonFondo,500);
+
+/* ABRIR CARTA */
+function abrirCarta(){
+document.getElementById("sobre").classList.add("open");
+document.getElementById("carta").classList.add("show");
+
+/* REPRODUCIR MUSICA */
+let musica = document.getElementById("musica");
+musica.volume = 0.5;
+musica.play();
+
+setTimeout(()=>{
+escribirTexto(document.getElementById("mensajePrincipal"),textoPrincipal,30);
+},1000);
+}
+
+/* BOTON NO */
+function moverNo(){
+const btn=document.querySelector(".no");
+btn.style.position="absolute";
+btn.style.top=Math.random()*80+"%";
+btn.style.left=Math.random()*80+"%";
+}
+
+/* ACEPTAR */
+function aceptar(){
+document.getElementById("mensajeFinal").style.display="block";
+
+escribirTexto(document.getElementById("tituloFinal"),tituloFinalTexto,60);
+
+setTimeout(()=>{
+escribirTexto(document.getElementById("textoFinal"),textoFinalCompleto,30);
+},1500);
+
+for(let i=0;i<200;i++){
+setTimeout(()=>{
+crearExplosion();
+},i*30);
+}
+}
+
+/* EXPLOSION */
+function crearExplosion(){
+const heart=document.createElement("div");
+heart.classList.add("explosion");
+heart.innerHTML="💖";
+heart.style.left=Math.random()*100+"vw";
+heart.style.top=Math.random()*100+"vh";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),2000);
+}
+
+</script>
+
+</body>
+</html>
